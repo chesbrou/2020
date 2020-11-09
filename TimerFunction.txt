@@ -1,0 +1,26 @@
+﻿module.exports = async function (context, myTimer) {
+   var timeStamp = new Date().toISOString();
+  
+   if (myTimer.IsPastDue)
+   {
+       context.log('JavaScript is running late!');
+   }
+   var http = require('http');
+   var https = require('https');
+  
+   const options = {
+       method: 'GET',
+       //setting a variable to a JSON object with one attribute called GET
+       //https://iotc-fn6ovv477ylwgj4.azurewebsites.net/api/IoTCIntegration?code=FFQCU1FwTaVTN6A19u0C4wqVM90keXB3kYy2wlBT0anD2fTYdUkHMQ==
+       hostname: 'iotc-fn6ovv477ylwgj4.azurewebsites.net',
+       path: '/api/IoTCIntegration?code=FFQCU1FwTaVTN6A19u0C4wqVM90keXB3kYy2wlBT0anD2fTYdUkHMQ==',
+       port: '443'
+
+
+   };
+      
+   context.log('Sending triggering Purple Air request');
+   //logging in
+   https.request(options, (response) => {}).end();
+   context.log('JavaScript timer trigger function ran!', timeStamp);  
+};
