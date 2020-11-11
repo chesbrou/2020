@@ -1,0 +1,41 @@
+﻿import sys
+import os
+import time
+import RPi.GPIO as GPIO
+from random import randint
+from iotc import IoTCClient, IOTCConnectType, IOTCLogLevel, IOTCEvents
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18, GPIO.OUT)
+# Change config section name to reflect sample.ini
+device_id = 'Your own device ID' 
+scope_id = 'Your own scope ID'
+key = 'SAS Primary Key'
+def on_props(propName, propValue):
+    print(propValue)
+    return True
+def on_commands(command, ack):
+    print(command.name)
+    ack(command.name, 'Command received', command.request_id)
+# see client.Device documentation above for x509 argument sample
+client = IoTCClient(device_id, scope_id,
+                  IOTCConnectType.IOTC_CONNECT_DEVICE_KEY, key)
+client.set_log_level(IOTCLogLevel.IOTC_LOGGING_ALL)
+client.on(IOTCEvents.IOTC_PROPERTIES, on_props)
+client.on(IOTCEvents.IOTC_COMMAND, on_commands)
+def main():
+    client.connect()
+    while client.is_connected():
+        randomsentnumber = randint(0,100)
+        if ((randomsentnumber % 2) == 0):
+                print("LED ON")
+                GPIO.output(18, GPIO.HIGH)
+        else:
+                print("LED OFF")
+                GPIO.output(18, GPIO.LOW)
+        client.send_telemetry({
+            'RandomNumber': randomsentnumber 
+        //Replace ‘RandomNumber’ with whatever name you gave for the ‘Name’ field of the //interface of the device template in this case I will replace it with “Mustmatchyourrasppi’
+        })
+        time.sleep(3)
+main()
