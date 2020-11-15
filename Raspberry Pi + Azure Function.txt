@@ -35,7 +35,7 @@ def main():
                 GPIO.output(18, GPIO.LOW)
         client.send_telemetry({
             'RandomNumber': randomsentnumber 
-        //Replace ‘RandomNumber’ with whatever name you gave for the ‘Name’ field of the //interface of the device template in this case I will replace it with “Mustmatchyourrasppi’
+        #Replace ‘RandomNumber’ with whatever name you gave for the ‘Name’ field of the //interface of the device template in this case I will replace it with “Mustmatchyourrasppi’
         })
         time.sleep(3)
 main()
