@@ -27,7 +27,7 @@ def main():
     client.connect()
     while client.is_connected():
         randomsentnumber = randint(0,100)
-        if ((randomsentnumber % 2) == 0):
+        if (randomsentnumber > 50):
                 print("LED ON")
                 GPIO.output(18, GPIO.HIGH)
         else:
